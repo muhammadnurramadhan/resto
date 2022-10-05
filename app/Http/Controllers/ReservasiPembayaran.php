@@ -64,10 +64,10 @@ class ReservasiPembayaran extends Controller
         "order_id": "order-101q-' . "$orderid" . '"
     },
     "customer_details": {
-        "email": "'. Auth::user()->email.'",
-        "first_name": "'. Auth::user()->name.'",
+        "email": "' . Auth::user()->email . '",
+        "first_name": "' . Auth::user()->name . '",
         "last_name": "",
-        "phone": "'. Auth::user()->phone.'"
+        "phone": "' . Auth::user()->phone . '"
     },
     "item_details": [
     {
@@ -90,12 +90,13 @@ class ReservasiPembayaran extends Controller
         ));
 
         $response = curl_exec($curl);
-        $res = json_decode($response);        
+        $res = json_decode($response);
 
         $status_message = $res->status_message;
         $transaction_id = $res->transaction_id;
         $order_id = $res->order_id;
         $gross_amount = $res->gross_amount;
+        $transaction_status = $res->transaction_status;
 
         curl_close($curl);
 
@@ -125,19 +126,20 @@ class ReservasiPembayaran extends Controller
             DB::insert('insert into antrian_take_aways (jam_kedatangan, nama, nohp, status_kehadiran, antrian_sekarang, jumlah_orang, panggilan) values (?, ?, ?, ?, ?, ?, ?)', [$jam_kedatangan, $nama, $nohp, $status_kehadiran, $antrian_sekarang, $jumlah_orang, 1]);
         }
 
-
-        DB::table('users')
-            ->where('id', Auth::user()->id)
-            ->update([
-                'role' => 3,
-                'reservasi_konfirmasi_pembayaran' => 'aggreement',
-                'status_message' => $status_message,
-                'transaction_id' => $transaction_id,
-                'order_id' => $order_id,
-                'gross_amount' => $gross_amount,
-            ]);
-
-        
+        if (Auth::user()->pilih_jenis_reservasi == 'RESERVASI') {
+            # code...
+            DB::table('users')
+                ->where('id', Auth::user()->id)
+                ->update([
+                    'role' => 3,
+                    'reservasi_konfirmasi_pembayaran' => 'aggreement',
+                    'status_message' => $status_message,
+                    'transaction_id' => $transaction_id,
+                    'order_id' => $order_id,
+                    'gross_amount' => $gross_amount,
+                    'transaction_status' => $transaction_status,
+                ]);
+        }
         return redirect('/reservasi-tunggu-payment');
     }
 }

@@ -9,26 +9,26 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 
 
-class ReservasiJam extends Controller
+class ReservasiTanggal extends Controller
 {
     public function create()
     {
-        return view('livewire.resto.user.reservasi.reservasi-jam-kedatangan');
+        return view('livewire.resto.user.reservasi.reservasi-tanggal-kedatangan');
     }
 
     public function store()
     {
         $attributes = request()->validate([
-            'waktu_kedatangan' => ['required', 'max:20'],
+            'tanggal_kedatangan' => ['required', 'max:20'],
         ]);
 
         DB::table('users')
             ->where('id', Auth::user()->id)
-            ->update(['waktu_kedatangan' => $attributes['waktu_kedatangan']]);
+            ->update(['tanggal_kedatangan' => $attributes['tanggal_kedatangan']]);
 
         session()->flash('success', 'Your account has been created.');
         // $user = User::create($attributes);
         // Auth::login($user); 
-        return redirect('/reservasi-tanggal');
+        return redirect('/reservasi-pembayaran');
     }
 }

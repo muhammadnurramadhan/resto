@@ -73,7 +73,7 @@
         <div style="display: flex; justify-content:center; align-items:center; flex-direction:column; width:100%; margin-bottom: 10%">
             <h1
                 style="color: #264c3d;font-size:2rem; padding-left: 10%; padding-right:10%; text-align:center; align-items:center; justify-content:center; margin-top: 10%; font-weight:bolder">
-                Antrian Take-away <i>( {{ $status_dinein }} )</i></h1>
+                Antrian Dine-in <i>( {{ $status_dinein }} )</i></h1>
 
             <div class="container">
                 <div class="row">

@@ -19,16 +19,13 @@ class WaitingListInputEmail extends Controller
     public function store()
     {
         $attributes = request()->validate([
-            'email' => ['required', 'max:20'],
+            'email' => ['required', 'max:200'],
         ]);
 
         DB::table('users')
             ->where('id', Auth::user()->id)
             ->update(['email' => $attributes['email']]);
 
-        // session()->flash('success', 'Your account has been created.');
-        // $user = User::create($attributes);
-        // Auth::login($user); 
         return redirect('/waitinglist-input-whatsapp');
     }
 }

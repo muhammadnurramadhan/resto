@@ -23,7 +23,7 @@ class RestoIntroController extends Controller
         // ====================================================
         $uid = rand(000, 999);
         $attributes['name'] = '';
-        $attributes['cabang'] = '';
+        $attributes['tanggal_kedatangan'] = '';
         $attributes['email'] = 'pelanggan_' . $uid . '@mail.com';
         $attributes['password'] = '';
         $attributes['userid'] = 'pelanggan_' . $uid;
@@ -38,6 +38,7 @@ class RestoIntroController extends Controller
         $attributes['no_va'] = 0;
         $attributes['order_id'] = '';
         $attributes['status_message'] = '';
+        $attributes['transaction_status'] = '';
         $attributes['transaction_id'] = '';
         $attributes['gross_amount'] = '';
         $attributes['no_antrian'] = 0;
@@ -46,7 +47,7 @@ class RestoIntroController extends Controller
         session()->flash('success', 'Your account has been created.');
 
 
-        $user = User::create($attributes);
+        $user = User::updateOrCreate($attributes);  // update atau create jika data sama terdaftar
         Auth::login($user);
         return redirect('/reservasi-cabang');
     }

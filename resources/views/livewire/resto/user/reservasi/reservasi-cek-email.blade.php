@@ -60,37 +60,41 @@
         </h1>
 
         <div style="margin-top: 10%;display: flex; text-align:center; align-items:center; justify-content:center;">
-            <div class="card" style="width: 90%;"
-                style="background-color: #264c3d; display: flex; text-align:center; align-items:center; justify-content:center;">
-                <ul class="list-group list-group-flush"
-                    style="background-color: #264c3d; display: flex; align-items:center; justify-content:center;">
-                    <li class="list-group-item"
+            @if (Auth::user()->pilih_jenis_reservasi == 'RESERVASI')
+                <div class="card" style="width: 90%;"
+                    style="background-color: #264c3d; display: flex; text-align:center; align-items:center; justify-content:center;">
+                    <ul class="list-group list-group-flush"
                         style="background-color: #264c3d; display: flex; align-items:center; justify-content:center;">
-                        <h1
-                            style="color: #f1f1f1;font-size:1.0rem; font-style:italic; padding-left: 10%; padding-right:10%; text-align:center; align-items:center; justify-content:center; margin-top: 3%">
-                            <b> Status Pembayaran </b> : {{ Auth::user()->status_message }}
-                        </h1>
-                    </li>
-                    <li class="list-group-item" style="background-color: #264c3d; display: flex">
-                        <h1
-                            style="color: #f1f1f1;font-size:1.0rem; font-style:italic; padding-left: 10%; padding-right:10%; text-align:center; align-items:center; justify-content:center;">
-                            <b> Jumlah Pembayaran </b> : {{ Auth::user()->gross_amount }}
-                        </h1>
-                    </li>
-                    <li class="list-group-item" style="background-color: #264c3d; display: flex">
-                        <h1
-                            style="color: #f1f1f1;font-size:1.0rem; font-style:italic; padding-left: 10%; padding-right:10%; text-align:center; align-items:center; justify-content:center;">
-                            <b>Transaksi id</b> : {{ Auth::user()->transaction_id }}
-                        </h1>
-                    </li>
-                    <li class="list-group-item" style="background-color: #264c3d; display: flex">
-                        <h1
-                            style="color: #f1f1f1;font-size:1.0rem; font-style:italic; padding-left: 10%; padding-right:10%; text-align:center; align-items:center; justify-content:center;">
-                            <b>Order id</b> : {{ Auth::user()->order_id }}
-                        </h1>
-                    </li>
-                </ul>
-            </div>
+                        <li class="list-group-item"
+                            style="background-color: #264c3d; display: flex; align-items:center; justify-content:center;">
+                            <h1
+                                style="color: #f1f1f1;font-size:1.0rem; font-style:italic; padding-left: 10%; padding-right:10%; text-align:center; align-items:center; justify-content:center; margin-top: 3%">
+                                <b> Status Pembayaran </b> : {{ Auth::user()->status_message }}
+                            </h1>
+                        </li>
+                        <li class="list-group-item" style="background-color: #264c3d; display: flex">
+                            <h1
+                                style="color: #f1f1f1;font-size:1.0rem; font-style:italic; padding-left: 10%; padding-right:10%; text-align:center; align-items:center; justify-content:center;">
+                                <b> Jumlah Pembayaran </b> : {{ Auth::user()->gross_amount }}
+                            </h1>
+                        </li>
+                        <li class="list-group-item" style="background-color: #264c3d; display: flex">
+                            <h1
+                                style="color: #f1f1f1;font-size:1.0rem; font-style:italic; padding-left: 10%; padding-right:10%; text-align:center; align-items:center; justify-content:center;">
+                                <b>Transaksi id</b> : {{ Auth::user()->transaction_id }}
+                            </h1>
+                        </li>
+                        <li class="list-group-item" style="background-color: #264c3d; display: flex">
+                            <h1
+                                style="color: #f1f1f1;font-size:1.0rem; font-style:italic; padding-left: 10%; padding-right:10%; text-align:center; align-items:center; justify-content:center;">
+                                <b>Order id</b> : {{ Auth::user()->order_id }}
+                            </h1>
+                        </li>
+                    </ul>
+                </div>
+            @else
+                <div></div>
+            @endif
         </div>
 
         <h1

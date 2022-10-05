@@ -32,6 +32,12 @@
                             <input type="text" class="form-control" id="nama" name="nama"
                                 value="{{ $pelanggan->nama }}" />
                         </div>
+                        {{-- nama cabang --}}
+                        <div class="form-group" style="margin-top: 2%">
+                            <label for="sub_nama">Sub nama cabang</label>
+                            <input type="text" class="form-control" id="sub_nama" name="sub_nama"
+                                value="{{ $pelanggan->nama }}" />
+                        </div>
 
                         {{-- nama cabang --}}
                         <div class="form-group" style="margin-top: 2%">
@@ -46,6 +52,23 @@
                             <input type="number" class="form-control" id="fee" name="fee"
                                 value="{{ $pelanggan->fee }}" />
                         </div>
+
+
+
+                        {{-- tanggal tutup --}}
+                        {{-- <div class="form-group" style="margin-top: 2%">
+                            <label for="tanggal_tutup">Tanggal tutup</label>
+                            <input type="date" class="form-control" id="tanggal_tutup" name="tanggal_tutup"
+                                value="{{ $pelanggan->tanggal_tutup }}" />
+                        </div> --}}
+                        
+
+                        {{-- jam tutup --}}
+                        {{-- <div class="form-group" style="margin-top: 2%">
+                            <label for="jam_tutup">Jam tutup</label>
+                            <input type="time" class="form-control" id="jam_tutup" name="jam_tutup"
+                                value="{{ $pelanggan->jam_tutup }}" />
+                        </div> --}}
 
                         {{-- status reservasi --}}
                         <div class="input-group mb-3" style="margin-top: 3%">
@@ -93,22 +116,6 @@
                             </select>
                         </div>
 
-                        {{-- tanggal tutup --}}
-                        <div class="form-group" style="margin-top: 2%">
-
-                            <button onclick="calendar()" class="btn">Date</button>
-                            <label for="daterange">Tanggal tutup</label>
-                            <input type="text" class="form-control" id="daterange" name="daterange"
-                                value="{{ $pelanggan->tanggal_tutup }}" />
-                        </div>
-
-                        {{-- jam tutup --}}
-                        <div class="form-group" style="margin-top: 2%">
-                            <label for="jam_tutup">Jam tutup</label>
-                            <input type="time" class="form-control" id="jam_tutup" name="jam_tutup"
-                                value="{{ $pelanggan->jam_tutup }}" />
-                        </div>
-
                         <div style="display: flex; flex-direction:row;">
                             <div style="margin-top: 2%; ">
                                 <button type="submit" class="btn btn-block btn-outline-info">Update status
@@ -126,7 +133,7 @@
     </div>
 
     {{-- date range script --}}
-    <script>
+    {{-- <script>
         $(function() {
             $('input[name="daterange"]').daterangepicker({
                 opens: 'left'
@@ -142,7 +149,26 @@
         function calendar() {
             $('input[name="daterange"]').focus();
         }
-    </script>
+    </script> --}}
+
+    
+<!-- JavaScript -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript">
+    var i = 0;
+    $("#dynamic-ar").click(function () {
+        ++i;
+        $("#dynamicAddRemove").append('<tr><td><input type="time" name="addMoreInputFields[' + i +
+            '][jam_libur]" placeholder="Enter jam libur" class="form-control" /></td><td><input type="date" name="addMoreInputFields[' + i +
+            '][tanggal_libur]" placeholder="Enter tanggal libur" class="form-control" /></td><td><input type="text" name="addMoreInputFields[' + i +
+            '][cabang]" placeholder="Enter cabang" class="form-control" /></td><td><button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td></tr>'
+            );
+    });
+    $(document).on('click', '.remove-input-field', function () {
+        $(this).parents('tr').remove();
+    });
+</script>
 
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">

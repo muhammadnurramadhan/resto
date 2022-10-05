@@ -8,7 +8,8 @@
                     <div class="card mb-4">
                         <div class="card-header pb-0">
                             <h6>Status cabang</h6>
-                            <button class="btn btn-info btn-sm" type="button" onclick="location.href='{{ url('cabang-add') }}'">Add cabang</button>
+                            <button class="btn btn-info btn-sm" type="button"
+                                onclick="location.href='{{ url('cabang-add') }}'">Add cabang</button>
                         </div>
                         <div class="card-body px-0 pt-0 pb-2">
                             <div class="table-responsive p-0">
@@ -23,12 +24,12 @@
                                             <th
                                                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                 Jumlah meja</th>
-                                            <th
+                                            {{-- <th
                                                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                 Tanggal tutup</th>
                                             <th
                                                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Jam tutup</th>
+                                                Jam tutup</th> --}}
 
                                             <th
                                                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
@@ -49,8 +50,8 @@
                                             <th class="text-secondary opacity-7"></th>
                                         </tr>
                                     </thead>
-                                    <tbody>
 
+                                    <tbody>
                                         @foreach ($antrian as $item)
                                             <tr>
                                                 <td>
@@ -63,34 +64,34 @@
                                                         </div>
                                                     </div>
                                                 </td>
-                                                
+
                                                 <td class="align-middle" style="text-align: center">
                                                     <a href="javascript:;" class="text-secondary font-weight-bold text-xs"
                                                         data-toggle="tooltip" data-original-title="Edit user">
                                                         {{ $item->nama }}
                                                     </a>
                                                 </td>
-                                                
+
                                                 <td class="align-middle" style="text-align: center">
                                                     <a href="javascript:;" class="text-secondary font-weight-bold text-xs"
                                                         data-toggle="tooltip" data-original-title="Edit user">
                                                         {{ $item->jumlah_meja }}
                                                     </a>
                                                 </td>
-                                                
-                                                <td class="align-middle" style="text-align: center">
+
+                                                {{-- <td class="align-middle" style="text-align: center">
                                                     <a href="javascript:;" class="text-secondary font-weight-bold text-xs"
                                                         data-toggle="tooltip" data-original-title="Edit user">
                                                         {{ $item->tanggal_tutup }}
                                                     </a>
                                                 </td>
-                                                
+
                                                 <td class="align-middle" style="text-align: center">
                                                     <a href="javascript:;" class="text-secondary font-weight-bold text-xs"
                                                         data-toggle="tooltip" data-original-title="Edit user">
                                                         {{ $item->jam_tutup }}
                                                     </a>
-                                                </td>
+                                                </td> --}}
 
                                                 @if ($item->status_reservasi == 'aktif')
                                                     <td class="align-middle text-center text-sm" style="text-align: center">
@@ -139,6 +140,94 @@
                                                 <td class="text-center">
                                                     <a href="{{ route('cabang.edit', $item->id) }}"
                                                         class="btn btn-primary btn-sm">Edit</a>
+                                                    <form action="{{ route('cabang.destroy', $item->id) }}" method="post"
+                                                        style="display: inline-block">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button class="btn btn-danger btn-sm""
+                                                            type="submit">Delete</button>
+                                                    </form>
+                                                </td>
+
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card mb-4">
+                        <div class="card-header pb-0">
+                            <h6>Status libur cabang</h6>
+                            <button class="btn btn-info btn-sm" type="button"
+                                onclick="location.href='{{ url('cabang-waktu-libur') }}'">Add waktu libur</button>
+                        </div>
+                        <div class="card-body px-0 pt-0 pb-2">
+                            <div class="table-responsive p-0">
+                                <table class="table align-items-center mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
+                                                style="text-align: center">No</th>
+                                            <th
+                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                Nama cabang</th>
+
+                                            <th
+                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                Jam tutup</th>
+
+                                            <th
+                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                Tanggal tutup</th>
+
+                                            {{-- <th
+                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                Actions</th> --}}
+                                            <th class="text-secondary opacity-7"></th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        @foreach ($libur as $item)
+                                            <tr>
+                                                <td>
+                                                    <div class="d-flex px-2 py-1">
+                                                        <div>
+                                                            {{-- <img src="../assets/img/team-2.jpg" class="avatar avatar-sm me-3" alt="user1"> --}}
+                                                        </div>
+                                                        <div class="d-flex flex-column justify-content-center">
+                                                            <h6 class="mb-0 text-sm">{{ $item->id }}</h6>
+                                                        </div>
+                                                    </div>
+                                                </td>
+
+                                                <td class="align-middle" style="text-align: center">
+                                                    <a href="javascript:;" class="text-secondary font-weight-bold text-xs"
+                                                        data-toggle="tooltip" data-original-title="Edit user">
+                                                        {{ $item->cabang }}
+                                                    </a>
+                                                </td>
+                                                
+                                                <td class="align-middle" style="text-align: center">
+                                                    <a href="javascript:;" class="text-secondary font-weight-bold text-xs"
+                                                        data-toggle="tooltip" data-original-title="Edit user">
+                                                        {{ $item->jam_libur }}
+                                                    </a>
+                                                </td>
+                                                
+                                                <td class="align-middle" style="text-align: center">
+                                                    <a href="javascript:;" class="text-secondary font-weight-bold text-xs"
+                                                        data-toggle="tooltip" data-original-title="Edit user">
+                                                        {{ $item->tanggal_libur }}
+                                                    </a>
+                                                </td>
+
+                                                
+                                                {{-- <td class="text-center">
+                                                    <a href="{{ route('cabang.edit', $item->id) }}"
+                                                        class="btn btn-primary btn-sm">Edit</a>
                                                     <form action="{{ route('cabang.destroy', $item->id) }}"
                                                         method="post" style="display: inline-block">
                                                         @csrf
@@ -146,7 +235,7 @@
                                                         <button class="btn btn-danger btn-sm""
                                                             type="submit">Delete</button>
                                                     </form>
-                                                </td>
+                                                </td> --}}
 
                                             </tr>
                                         @endforeach
@@ -156,381 +245,6 @@
                         </div>
                     </div>
 
-
-                    {{-- antrian reservasi --}}
-                    <div class="card mb-4">
-                        <div class="card-header pb-0">
-                            <h6>Antrian reservasi</h6>
-                        </div>
-                        <div class="card-body px-0 pt-0 pb-2">
-                            <div class="table-responsive p-0">
-                                <table class="table align-items-center mb-0">
-                                    <thead>
-                                        <tr>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
-                                                style="text-align: center">No</th>
-                                            <th
-                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Jam kedatangan</th>
-                                            <th
-                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Nama</th>
-                                            <th
-                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                No hp</th>
-                                            <th
-                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Status kehadiran</th>
-                                            <th
-                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Antrian sekarang</th>
-                                            <th
-                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Panggilan</th>
-                                            <th
-                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Jumlah orang</th>
-
-                                            <th
-                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Action</th>
-                                            <th class="text-secondary opacity-7"></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-
-                                        @foreach ($antrian_reservasi as $item)
-                                            <tr>
-                                                <td>
-                                                    <div class="d-flex px-2 py-1">
-                                                        <div>
-                                                            {{-- <img src="../assets/img/team-2.jpg" class="avatar avatar-sm me-3" alt="user1"> --}}
-                                                        </div>
-                                                        <div class="d-flex flex-column justify-content-center">
-                                                            <h6 class="mb-0 text-sm">{{ $item->id }}</h6>
-                                                        </div>
-                                                    </div>
-                                                </td>
-
-                                                <td class="align-middle" style="text-align: center">
-                                                    <a href="javascript:;" class="text-secondary font-weight-bold text-xs"
-                                                        data-toggle="tooltip" data-original-title="Edit user">
-                                                        {{ $item->jam_kedatangan }}
-                                                    </a>
-                                                </td>
-
-                                                <td class="align-middle" style="text-align: center">
-                                                    <a href="javascript:;" class="text-secondary font-weight-bold text-xs"
-                                                        data-toggle="tooltip" data-original-title="Edit user">
-                                                        {{ $item->nama }}
-                                                    </a>
-                                                </td>
-
-                                                <td class="align-middle" style="text-align: center">
-                                                    <a href="javascript:;" class="text-secondary font-weight-bold text-xs"
-                                                        data-toggle="tooltip" data-original-title="Edit user">
-                                                        {{ $item->nohp }}
-                                                    </a>
-                                                </td>
-
-                                                <td class="align-middle" style="text-align: center">
-                                                    <a href="javascript:;" class="text-secondary font-weight-bold text-xs"
-                                                        data-toggle="tooltip" data-original-title="Edit user">
-                                                        {{ $item->status_kehadiran }}
-                                                    </a>
-                                                </td>
-
-                                                <td class="align-middle" style="text-align: center">
-                                                    <a href="javascript:;" class="text-secondary font-weight-bold text-xs"
-                                                        data-toggle="tooltip" data-original-title="Edit user">
-                                                        {{ $item->antrian_sekarang }}
-                                                    </a>
-                                                </td>
-
-                                                <td class="align-middle" style="text-align: center">
-                                                    <a href="javascript:;" class="text-secondary font-weight-bold text-xs"
-                                                        data-toggle="tooltip" data-original-title="Edit user">
-                                                        {{ $item->panggilan }}
-                                                    </a>
-                                                </td>
-
-                                                <td class="align-middle" style="text-align: center">
-                                                    <a href="javascript:;" class="text-secondary font-weight-bold text-xs"
-                                                        data-toggle="tooltip" data-original-title="Edit user">
-                                                        {{ $item->jumlah_orang }}
-                                                    </a>
-                                                </td>
-                                                <td class="text-center">
-                                                    <a href="{{ route('antrian-reservasi.edit', $item->id) }}"
-                                                        class="btn btn-primary btn-sm">Edit</a>
-                                                    <form action="{{ route('antrian-reservasi.destroy', $item->id) }}"
-                                                        method="post" style="display: inline-block">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button class="btn btn-danger btn-sm""
-                                                            type="submit">Delete</button>
-                                                    </form>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-
-                    {{-- antrian dinein --}}
-                    <div class="card mb-4">
-                        <div class="card-header pb-0">
-                            <h6>Antrian dine-in</h6>
-                        </div>
-                        <div class="card-body px-0 pt-0 pb-2">
-                            <div class="table-responsive p-0">
-                                <table class="table align-items-center mb-0">
-                                    <thead>
-                                        <tr>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
-                                                style="text-align: center">No</th>
-                                            <th
-                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Jam kedatangan</th>
-                                            <th
-                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Nama</th>
-                                            <th
-                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                No hp</th>
-                                            <th
-                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Status kehadiran</th>
-                                            <th
-                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Antrian sekarang</th>
-                                            <th
-                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Panggilan</th>
-                                            <th
-                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Jumlah orang</th>
-
-                                            <th
-                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Action</th>
-                                            <th class="text-secondary opacity-7"></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-
-                                        @foreach ($antrian_dinein as $item)
-                                            <tr>
-                                                <td>
-                                                    <div class="d-flex px-2 py-1">
-                                                        <div>
-                                                            {{-- <img src="../assets/img/team-2.jpg" class="avatar avatar-sm me-3" alt="user1"> --}}
-                                                        </div>
-                                                        <div class="d-flex flex-column justify-content-center">
-                                                            <h6 class="mb-0 text-sm">{{ $item->id }}</h6>
-                                                        </div>
-                                                    </div>
-                                                </td>
-
-                                                <td class="align-middle" style="text-align: center">
-                                                    @if ($item->jam_kedatangan != null)
-                                                        <a href="javascript:;"
-                                                            class="text-secondary font-weight-bold text-xs"
-                                                            data-toggle="tooltip" data-original-title="Edit user">
-                                                            {{ $item->jam_kedatangan }}
-                                                        </a>
-                                                    @else
-                                                        <a href="javascript:;"
-                                                            class="text-secondary font-weight-bold text-xs"
-                                                            data-toggle="tooltip" data-original-title="Edit user">
-                                                            -
-                                                        </a>
-                                                    @endif
-                                                </td>
-
-                                                <td class="align-middle" style="text-align: center">
-                                                    <a href="javascript:;" class="text-secondary font-weight-bold text-xs"
-                                                        data-toggle="tooltip" data-original-title="Edit user">
-                                                        {{ $item->nama }}
-                                                    </a>
-                                                </td>
-
-                                                <td class="align-middle" style="text-align: center">
-                                                    <a href="javascript:;" class="text-secondary font-weight-bold text-xs"
-                                                        data-toggle="tooltip" data-original-title="Edit user">
-                                                        {{ $item->nohp }}
-                                                    </a>
-                                                </td>
-
-                                                <td class="align-middle" style="text-align: center">
-                                                    <a href="javascript:;" class="text-secondary font-weight-bold text-xs"
-                                                        data-toggle="tooltip" data-original-title="Edit user">
-                                                        {{ $item->status_kehadiran }}
-                                                    </a>
-                                                </td>
-
-                                                <td class="align-middle" style="text-align: center">
-                                                    <a href="javascript:;" class="text-secondary font-weight-bold text-xs"
-                                                        data-toggle="tooltip" data-original-title="Edit user">
-                                                        {{ $item->antrian_sekarang }}
-                                                    </a>
-                                                </td>
-
-                                                <td class="align-middle" style="text-align: center">
-                                                    <a href="javascript:;" class="text-secondary font-weight-bold text-xs"
-                                                        data-toggle="tooltip" data-original-title="Edit user">
-                                                        {{ $item->panggilan }}
-                                                    </a>
-                                                </td>
-
-                                                <td class="align-middle" style="text-align: center">
-                                                    <a href="javascript:;" class="text-secondary font-weight-bold text-xs"
-                                                        data-toggle="tooltip" data-original-title="Edit user">
-                                                        {{ $item->jumlah_orang }}
-                                                    </a>
-                                                </td>
-                                                <td class="text-center">
-                                                    <a href="{{ route('antrian-dinein.edit', $item->id) }}"
-                                                        class="btn btn-primary btn-sm">Edit</a>
-                                                    <form action="{{ route('antrian-dinein.destroy', $item->id) }}"
-                                                        method="post" style="display: inline-block">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button class="btn btn-danger btn-sm""
-                                                            type="submit">Delete</button>
-                                                    </form>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-
-                    {{-- antrian take-away --}}
-                    <div class="card mb-4">
-                        <div class="card-header pb-0">
-                            <h6>Antrian takeaway</h6>
-                        </div>
-                        <div class="card-body px-0 pt-0 pb-2">
-                            <div class="table-responsive p-0">
-                                <table class="table align-items-center mb-0">
-                                    <thead>
-                                        <tr>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
-                                                style="text-align: center">No</th>
-                                            <th
-                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Jam kedatangan</th>
-                                            <th
-                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Nama</th>
-                                            <th
-                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                No hp</th>
-                                            <th
-                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Status kehadiran</th>
-                                            <th
-                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Antrian sekarang</th>
-                                            <th
-                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Panggilan</th>
-                                            <th
-                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Jumlah orang</th>
-
-                                            <th
-                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Action</th>
-                                            <th class="text-secondary opacity-7"></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-
-                                        @foreach ($antrian_takeaway as $item)
-                                            <tr>
-                                                <td>
-                                                    <div class="d-flex px-2 py-1">
-                                                        <div>
-                                                            {{-- <img src="../assets/img/team-2.jpg" class="avatar avatar-sm me-3" alt="user1"> --}}
-                                                        </div>
-                                                        <div class="d-flex flex-column justify-content-center">
-                                                            <h6 class="mb-0 text-sm">{{ $item->id }}</h6>
-                                                        </div>
-                                                    </div>
-                                                </td>
-
-                                                <td class="align-middle" style="text-align: center">
-                                                    <a href="javascript:;" class="text-secondary font-weight-bold text-xs"
-                                                        data-toggle="tooltip" data-original-title="Edit user">
-                                                        {{ $item->jam_kedatangan }}
-                                                    </a>
-                                                </td>
-
-                                                <td class="align-middle" style="text-align: center">
-                                                    <a href="javascript:;" class="text-secondary font-weight-bold text-xs"
-                                                        data-toggle="tooltip" data-original-title="Edit user">
-                                                        {{ $item->nama }}
-                                                    </a>
-                                                </td>
-
-                                                <td class="align-middle" style="text-align: center">
-                                                    <a href="javascript:;" class="text-secondary font-weight-bold text-xs"
-                                                        data-toggle="tooltip" data-original-title="Edit user">
-                                                        {{ $item->nohp }}
-                                                    </a>
-                                                </td>
-
-                                                <td class="align-middle" style="text-align: center">
-                                                    <a href="javascript:;" class="text-secondary font-weight-bold text-xs"
-                                                        data-toggle="tooltip" data-original-title="Edit user">
-                                                        {{ $item->status_kehadiran }}
-                                                    </a>
-                                                </td>
-
-                                                <td class="align-middle" style="text-align: center">
-                                                    <a href="javascript:;" class="text-secondary font-weight-bold text-xs"
-                                                        data-toggle="tooltip" data-original-title="Edit user">
-                                                        {{ $item->antrian_sekarang }}
-                                                    </a>
-                                                </td>
-
-                                                <td class="align-middle" style="text-align: center">
-                                                    <a href="javascript:;" class="text-secondary font-weight-bold text-xs"
-                                                        data-toggle="tooltip" data-original-title="Edit user">
-                                                        {{ $item->panggilan }}
-                                                    </a>
-                                                </td>
-
-                                                <td class="align-middle" style="text-align: center">
-                                                    <a href="javascript:;" class="text-secondary font-weight-bold text-xs"
-                                                        data-toggle="tooltip" data-original-title="Edit user">
-                                                        {{ $item->jumlah_orang }}
-                                                    </a>
-                                                </td>
-                                                <td class="text-center">
-                                                    <a href="{{ route('antrian-takeaway.edit', $item->id) }}"
-                                                        class="btn btn-primary btn-sm">Edit</a>
-                                                    <form action="{{ route('antrian-takeaway.destroy', $item->id) }}"
-                                                        method="post" style="display: inline-block">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button class="btn btn-danger btn-sm""
-                                                            type="submit">Delete</button>
-                                                    </form>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
 

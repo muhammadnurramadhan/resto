@@ -22,7 +22,7 @@ class ReservasiInputEmail extends Controller
     public function store()
     {
         $attributes = request()->validate([
-            'email' => ['required', 'max:20'],
+            'email' => ['required', 'max:200'],
         ]);
 
         DB::table('users')

@@ -115,7 +115,7 @@
                     <div class="card mb-4">
                         <div class="card-header pb-0">
                             <h6>Daftar waiters</h6>
-                            <button class="btn btn-info btn-sm" type="button" onclick="location.href='{{ url('pelanggan-add') }}'">Add Waiters</button>
+                            <button class="btn btn-info btn-sm" type="button" onclick="location.href='{{ url('waiters-add') }}'">Add Waiters</button>
                         </div>
 
                         <div class="card-body px-0 pt-0 pb-2">

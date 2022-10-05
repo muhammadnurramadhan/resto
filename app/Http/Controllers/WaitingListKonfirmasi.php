@@ -25,76 +25,84 @@ class WaitingListKonfirmasi extends Controller
 
         
         // api curl midtrans
-        $orderid = rand(0000000000, 9999999999);
-        $curl = curl_init();
-        $no_va = rand(00000000, 99999999);
+//         $orderid = rand(0000000000, 9999999999);
+//         $curl = curl_init();
+//         $no_va = rand(00000000, 99999999);
 
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://api.sandbox.midtrans.com/v2/charge',
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => '{
-    "payment_type": "bank_transfer",
-    "transaction_details": {
-        "gross_amount": 2100,
-        "order_id": "order-101q-' . "$orderid" . '"
-    },
-    "customer_details": {
-        "email": "'. Auth::user()->email.'",
-        "first_name": "'. Auth::user()->name.'",
-        "last_name": "",
-        "phone": "'. Auth::user()->phone.'"
-    },
-    "item_details": [
-    {
-       "id": "item01",
-       "price": 2100,
-       "quantity": 1,
-       "name": "Ayam Zozozo"
-    }
-   ],
-   "bank_transfer":{
-     "bank": "bni",
-     "va_number": ' . $no_va . '
-  }
-}',
-            CURLOPT_HTTPHEADER => array(
-                'Accept: application/json',
-                'Content-Type: application/json',
-                'Authorization: Basic U0ItTWlkLXNlcnZlci1CekxnWWhpcy05RkxSZUtzUk5xR3pLbnY6'
-            ),
-        ));
+//         curl_setopt_array($curl, array(
+//             CURLOPT_URL => 'https://api.sandbox.midtrans.com/v2/charge',
+//             CURLOPT_RETURNTRANSFER => true,
+//             CURLOPT_ENCODING => '',
+//             CURLOPT_MAXREDIRS => 10,
+//             CURLOPT_TIMEOUT => 0,
+//             CURLOPT_FOLLOWLOCATION => true,
+//             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+//             CURLOPT_CUSTOMREQUEST => 'POST',
+//             CURLOPT_POSTFIELDS => '{
+//     "payment_type": "bank_transfer",
+//     "transaction_details": {
+//         "gross_amount": 2100,
+//         "order_id": "order-101q-' . "$orderid" . '"
+//     },
+//     "customer_details": {
+//         "email": "'. Auth::user()->email.'",
+//         "first_name": "'. Auth::user()->name.'",
+//         "last_name": "",
+//         "phone": "'. Auth::user()->phone.'"
+//     },
+//     "item_details": [
+//     {
+//        "id": "item01",
+//        "price": 2100,
+//        "quantity": 1,
+//        "name": "Ayam Zozozo"
+//     }
+//    ],
+//    "bank_transfer":{
+//      "bank": "bni",
+//      "va_number": ' . $no_va . '
+//   }
+// }',
+//             CURLOPT_HTTPHEADER => array(
+//                 'Accept: application/json',
+//                 'Content-Type: application/json',
+//                 'Authorization: Basic U0ItTWlkLXNlcnZlci1CekxnWWhpcy05RkxSZUtzUk5xR3pLbnY6'
+//             ),
+//         ));
 
-        $response = curl_exec($curl);
-        $res = json_decode($response);
+//         $response = curl_exec($curl);
+//         $res = json_decode($response);
 
-        $status_message = $res->status_message;
-        $transaction_id = $res->transaction_id;
-        $order_id = $res->order_id;
-        $gross_amount = $res->gross_amount;
+//         $status_message = $res->status_message;
+//         $transaction_id = $res->transaction_id;
+//         $order_id = $res->order_id;
+//         $gross_amount = $res->gross_amount;
 
-        curl_close($curl);
+//         curl_close($curl);
 
-        $attributes = request()->validate([
-            'reservasi_konfirmasi_pembayaran' =>  ['accepted'],
-        ]);
+//         $attributes = request()->validate([
+//             'reservasi_konfirmasi_pembayaran' =>  ['accepted'],
+//         ]);
 
 
         DB::table('users')
             ->where('id', Auth::user()->id)
             ->update([
                 'role' => 3,
-                'reservasi_konfirmasi_pembayaran' => $attributes['reservasi_konfirmasi_pembayaran'],
-                'status_message' => $status_message,
-                'transaction_id' => $transaction_id,
-                'order_id' => $order_id,
-                'gross_amount' => $gross_amount,
+                // 'reservasi_konfirmasi_pembayaran' => $attributes['reservasi_konfirmasi_pembayaran'],
+                // 'status_message' => $status_message,
+                // 'transaction_id' => $transaction_id,
+                // 'order_id' => $order_id,
+                // 'gross_amount' => $gross_amount,
             ]);
+
+            $to_name = Auth::user()->name; 
+            $to_email = Auth::user()->email; // Auth::user()->emmail
+            $data = array('name' => Auth::user()->name, "body" => "send notifikasi");
+            Mail::send("emails.mail", $data, function ($message) use ($to_name, $to_email) {
+                $message->to($to_email, $to_name)->subject("Notifikasi foods pembayaran");
+                $message->from("muhammadnurramadhan07@gmail.com", "Email notifikasi foods");
+            });
 
         // update table user reservasi
         // var reservasi 

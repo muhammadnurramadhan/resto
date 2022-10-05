@@ -120,35 +120,96 @@ class InfoWaitersController extends Controller
     public function store(Request $request)
     {
 
-        $attributes = request()->validate([
-            'name' => ['required', 'max:50'],
-            'email' => ['required', 'email', 'max:50', Rule::unique('users')->ignore(Auth::user()->id)],
-            'phone'     => ['max:50'],
-            // 'location' => ['max:70'],
-            // 'about_me'    => ['max:150'],
+        // $attributes = request()->validate([
+        //     'name' => ['required', 'max:50'],
+        //     'email' => ['required', 'email', 'max:50', Rule::unique('users')->ignore(Auth::user()->id)],
+        //     'phone'     => ['max:50'],
+        //     // 'location' => ['max:70'],
+        //     // 'about_me'    => ['max:150'],
+        // ]);
+        // if ($request->get('email') != Auth::user()->email) {
+        //     if (env('IS_DEMO') && Auth::user()->id == 1) {
+        //         return redirect()->back()->withErrors(['msg2' => 'You are in a demo version, you can\'t change the email address.']);
+        //     }
+        // } else {
+        //     $attribute = request()->validate([
+        //         'email' => ['required', 'email', 'max:50', Rule::unique('users')->ignore(Auth::user()->id)],
+        //     ]);
+        // }
+
+
+        // User::where('id', Auth::user()->id)
+        //     ->update([
+        //         'name'    => $attributes['name'],
+        //         'email' => $attribute['email'],
+        //         'phone'     => $attributes['phone'],
+        //         // 'location' => $attributes['location'],
+        //         // 'about_me'    => $attributes["about_me"],
+        //     ]);
+
+
+        // return redirect('/user-profile')->with('success', 'Profile updated successfully');
+
+
+        $storeData = $request->validate([
+            'name' => 'required|max:255',
+            'userid' => 'required|max:255',
+            'email' => 'required|max:255',
+            'pilih_cabang' => 'required|max:255',
+            // 'pilih_jenis_reservasi' => 'required|max:255',
+            'password' => 'required|max:255',
+            'status_aktif' => 'required|max:255',
+            // 'jumlah_kedatangan' => 'required|max:255',
+            // 'meja' => 'required|max:255',
+            // 'pesanan' => 'required|max:255',
         ]);
-        if ($request->get('email') != Auth::user()->email) {
-            if (env('IS_DEMO') && Auth::user()->id == 1) {
-                return redirect()->back()->withErrors(['msg2' => 'You are in a demo version, you can\'t change the email address.']);
-            }
-        } else {
-            $attribute = request()->validate([
-                'email' => ['required', 'email', 'max:50', Rule::unique('users')->ignore(Auth::user()->id)],
-            ]);
-        }
+        $storeData['role'] = 2;
+        $storeData['password'] = bcrypt($storeData['password']);
+        $storeData['phone'] = 0;
+        // $storeData['role'] = 3;
+        $storeData['waktu_kedatangan'] = '';
+        $storeData['no_va'] = 0;
+        $storeData['no_antrian'] = 0; //reservasi_konfirmasi_pembayaran
+        // $storeData['reservasi_konfirmasi_pembayaran'] = ''; //reservasi_konfirmasi_pembayaran
+        // $waitersCountRow = User::where('role', '=', 2)->get();
+        $waitersCountRow = DB::table('users')->where('role', '=', 2)->get();
+        $users = DB::table('users')->get();
+        // echo($users);
 
+        // foreach ($users as $key => $value) {
+        //     # code...
+        //     // echo ($users[4]->name);
+        //     if ($users[$key]->name == $storeData['name'] ||$users[$key]->email == $storeData['email'] || $users[$key]->userid == $storeData['userid']) {
+        //         //     # code...
+        //         return back()->withErrors(['name' => 'Nama atau userid sudah pernah dibuat.']);
+        //     } 
+        //     // else {
+                
+        //         return back()->withErrors(['name' => 'Nama atau userid belum dibuat.']);
+        //     // }
 
-        User::where('id', Auth::user()->id)
-            ->update([
-                'name'    => $attributes['name'],
-                'email' => $attribute['email'],
-                'phone'     => $attributes['phone'],
-                // 'location' => $attributes['location'],
-                // 'about_me'    => $attributes["about_me"],
-            ]);
+        //     // if ($users[$key]->name != $storeData['name']) {
+        //     //     User::create($storeData)->with('completed', 'Waiters telah dibuat!');
+        //     //     return redirect('/customer-data')->with('completed', 'Waiters telah dibuat!');
+        //     // }
+        // }
+        // echo($storeData['name']);
+        // for ($i = 0; $i < $waitersCountRow->count(); $i++) {
+        # code...
+        // if (DB::table('users')->where('name', '=', $storeData['name'])) {
+        //     //     # code...
+        //     return back()->withErrors(['name' => 'Nama atau userid sudah pernah dibuat.']);
+        // } else {
+        DB::table('users')->insertOrIgnore($storeData);
+        // $addWaiters = User::updateOrCreate($storeData)->with('completed', 'Waiters telah dibuat!');
+        //   $addWaiters->save();
+            return redirect('/customer-data')->with('completed', 'Waiters telah dibuat!');
+        // }
+        // }
+        // echo ($waitersCountRow->count());
 
-
-        return redirect('/user-profile')->with('success', 'Profile updated successfully');
+        // User::where('name',)->first();
+        // return redirect('/customer-data')->with('completed', 'Waiters has been saved!');
     }
 
 

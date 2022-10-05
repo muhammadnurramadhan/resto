@@ -13,33 +13,64 @@
     <div style="width:100%; justify-content:center; align-items:center; justify-content:center">
         <div class="card">
             <div class="card-body">
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div><br />
-                @endif
                 <div class="card" style="padding:5%">
 
-                    <h5 class="card-title">Add cabang</h5>
+                    <h5 class="card-title">Tambah cabang</h5>
 
                     <form method="post" action="cabang-store">
                         @csrf
+                        {{-- @method('PATCH') --}}
+
+                        {{-- nama cabang --}}
                         <div class="form-group" style="margin-top: 2%">
                             <label for="nama">Nama cabang</label>
-                            <input type="text" class="form-control" id="nama" name="nama" value="" />
+                            <input type="text" class="form-control" id="nama" name="nama" />
                         </div>
                         
                         <div class="form-group" style="margin-top: 2%">
-                            <label for="sub_nama">Sub nama cabang</label>
-                            <input type="text" class="form-control" id="sub_nama" name="sub_nama" value="" />
+                            <label for="sub_nama">Nama sub cabang</label>
+                            <input type="text" class="form-control" id="sub_nama" name="sub_nama" />
+                        </div>
+
+                        {{-- nama cabang --}}
+                        <div class="form-group" style="margin-top: 2%">
+                            <label for="meja">Jumlah meja</label>
+                            <input type="number" class="form-control" id="jumlah_meja" name="jumlah_meja" />
+                        </div>
+
+                        {{-- nama cabang --}}
+                        <div class="form-group" style="margin-top: 2%">
+                            <label for="fee">Fee</label>
+                            <input type="number" class="form-control" id="fee" name="fee" />
                         </div>
 
                         
 
+                        {{-- tanggal tutup --}}
+                        {{-- <div class="form-group" style="margin-top: 2%"> --}}
+                            {{-- <label for="date">Tanggal tutup</label>
+                            <input type="date" class="form-control" id="tanggal_tutup" name="tanggal_tutup" /> --}}
+
+                            {{-- <table class="table table-bordered" id="dynamicAddRemove">
+                                <tr>
+                                    <th>Tanggal tutup</th>
+                                    <th>Action</th>
+                                </tr>
+                                <tr>
+                                    <td><input type="date" name="addMoreInputFields[0][subject]" placeholder="Enter subject" class="form-control" />
+                                    </td>
+                                    <td><button type="button" name="add" id="dynamic-ar" class="btn btn-outline-primary">Add tanggal</button></td>
+                                </tr>
+                            </table> --}}
+                        {{-- </div> --}}
+
+                        {{-- jam tutup --}}
+                        {{-- <div class="form-group" style="margin-top: 2%">
+                            <label for="jam_tutup">Jam tutup</label>
+                            <input type="time" class="form-control" id="jam_tutup" name="jam_tutup" />
+                        </div> --}}
+
+                        {{-- status reservasi --}}
                         <div class="input-group mb-3" style="margin-top: 3%">
                             <div class="input-group-prepend">
                                 <label class="input-group-text" for="status_reservasi">Status Antrian
@@ -47,14 +78,13 @@
                             </div>
                             <select name="status_reservasi" class="custom-select" id="status_reservasi">
                                 {{-- <option selected disabled style="font-style: italic">
-                                    {{ $pelanggan->status_reservasi == 'aktif' ? 'Buka' : ($pelanggan->status_reservasi == 'stop' ? 'Tutup' : 'Pause') }}
-                                </option> --}}
+                                    {{ $pelanggan->status_reservasi == 'aktif' ? 'Buka' : ($pelanggan->status_reservasi == 'stop' ? 'Tutup' : 'Pause') }} --}}
+                                </option>
                                 <option value="aktif" style="font-style: italic">Buka</option>
                                 <option value="pause" style="font-style: italic">Pause</option>
                                 <option value="stop" style="font-style: italic">Tutup</option>
                             </select>
                         </div>
-                        
 
                         <div class="input-group mb-3" style="margin-top: 3%">
                             <div class="input-group-prepend">
@@ -63,14 +93,13 @@
                             </div>
                             <select name="status_dinein" class="custom-select" id="status_dinein">
                                 {{-- <option selected disabled style="font-style: italic">
-                                    {{ $pelanggan->status_dinein == 'aktif' ? 'Buka' : ($pelanggan->status_dinein == 'stop' ? 'Tutup' : 'Pause') }}
-                                </option> --}}
+                                    {{ $pelanggan->status_dinein == 'aktif' ? 'Buka' : ($pelanggan->status_dinein == 'stop' ? 'Tutup' : 'Pause') }} --}}
+                                </option>
                                 <option value="aktif" style="font-style: italic">Buka</option>
                                 <option value="pause" style="font-style: italic">Pause</option>
                                 <option value="stop" style="font-style: italic">Tutup</option>
                             </select>
                         </div>
-                        
 
                         <div class="input-group mb-3" style="margin-top: 3%">
                             <div class="input-group-prepend">
@@ -86,32 +115,10 @@
                                 <option value="stop" style="font-style: italic">Tutup</option>
                             </select>
                         </div>
-                        {{-- <div class="form-group" style="margin-top: 2%">
-                          
-                            <label for="email">Email</label>
-                            <input type="email" class="form-control" id="email" name="email" value="" />
-                        </div> --}}
-                        <!-- <div class="form-group" style="margin-top: 2%">
-                            <label for="status_kehadiran">Status kehadiran</label>
-                            <input type="text" class="form-control" name="status_kehadiran"
-                                value="" />
-                        </div>
-
-                        <div class="form-group" style="margin-top: 2%">
-                            <label for="antrian_sekarang">Antrian sekarang</label>
-                            <input type="text" class="form-control" name="antrian_sekarang"
-                                value="" />
-                        </div>
-                        <div class="form-group" style="margin-top: 2%">
-                            <label for="jumlah_orang">Jumlah orang</label>
-                            <input type="text" class="form-control" name="jumlah_orang"
-                                value="" />
-                        </div> -->
 
                         <div style="display: flex; flex-direction:row;">
                             <div style="margin-top: 2%; ">
-
-                                <button type="submit" class="btn btn-block btn-danger">Create cabang</button>
+                                <button type="submit" class="btn btn-block btn-outline-info">Create </button>
                             </div>
                             <div style="margin-top: 2%; margin-left:2%">
                                 <button type="button" class="btn btn-block btn-outline-primary"
@@ -122,9 +129,22 @@
                 </div>
             </div>
         </div>
-
-
     </div>
 </body>
+<!-- JavaScript -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript">
+    var i = 0;
+    $("#dynamic-ar").click(function () {
+        ++i;
+        $("#dynamicAddRemove").append('<tr><td><input type="date" name="addMoreInputFields[' + i +
+            '][subject]" placeholder="Enter tanggal" class="form-control" /></td><td><button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td></tr>'
+            );
+    });
+    $(document).on('click', '.remove-input-field', function () {
+        $(this).parents('tr').remove();
+    });
+</script>
 
 </html>

@@ -62,7 +62,7 @@ class InfoUserController extends Controller
             'pilih_jenis_reservasi' => 'required|max:255',
             'pilih_cabang' => 'required|max:255',
         ]);
-        
+
         // $updateData['password'] = bcrypt($updateData['password']);
 
         User::whereId($id)->update($updateData);
@@ -80,14 +80,14 @@ class InfoUserController extends Controller
             'pilih_jenis_reservasi' => 'required|max:255',
             'pilih_cabang' => 'required|max:255',
         ]);
-        
+
         // $updateData['password'] = bcrypt($updateData['password']);
 
         User::whereId($id)->update($updateData);
         return redirect('/customer-antrian')->with('completed', 'Pelanggan has been updated');
     }
 
-    
+
     public function edit_antrian($id)
     {
         $pelanggan = User::findOrFail($id);
@@ -102,15 +102,15 @@ class InfoUserController extends Controller
 
     public function destroy($id)
     {
-        
+
         $pelanggan = User::findOrFail($id);
         $pelanggan->delete();
         return redirect('/customer-data')->with('completed', 'Pelanggan has been deleted');
     }
-    
+
     public function destroy_antrian($id)
     {
-        
+
         $pelanggan = User::findOrFail($id);
         $pelanggan->delete();
         return redirect('/customer-antrian')->with('completed', 'Pelanggan has been deleted');
@@ -215,7 +215,8 @@ class InfoUserController extends Controller
     {
         // cabang -> antrian
         $antrian = DB::table('cabang')->get();
-        
+        $libur = DB::table('cabang_liburs')->get();
+
         // antrian
         // $antrian = DB::table('antrian')->get();
 
@@ -224,7 +225,18 @@ class InfoUserController extends Controller
         $antrian_reservasi = DB::table('antrian_reservasis')->get();
         $antrian_takeaway = DB::table('antrian_take_aways')->get();
 
+        return view('tables_antrian', ['antrian' => $antrian, 'libur' => $libur, 'antrian_reservasi' => $antrian_reservasi, 'antrian_dinein' => $antrian_dinein, 'antrian_takeaway' => $antrian_takeaway,]);
+    }
 
-        return view('tables_antrian', ['antrian' => $antrian, 'antrian_reservasi' => $antrian_reservasi, 'antrian_dinein' => $antrian_dinein, 'antrian_takeaway' => $antrian_takeaway,]);
+
+    public function show_pembayaran(User $user)
+    {
+        // cabang -> antrian
+        $data = User::all();
+        // echo($data);
+        return view('tables_pembayaran', ['members' => $data,]);
+
+        // return view('tables_antrian', ['antrian' => $antrian, 'antrian_reservasi' => $antrian_reservasi, 'antrian_dinein' => $antrian_dinein, 'antrian_takeaway' => $antrian_takeaway,]);
+
     }
 }

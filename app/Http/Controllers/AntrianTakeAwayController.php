@@ -67,6 +67,35 @@ class AntrianTakeAwayController extends Controller
         return view('livewire.resto.waiters.antrian-takeaway', ['members' => $data, 'count' => $rowCount, 'panggilan' => $panggilan, 'total_panggilan' => $total_panggilan, 'status_takeaway' => $status_antrian_takeaway]);
     }
 
+    public function start_panggilan(AntrianTakeAway $antrianTakeAway)
+    {
+        DB::table('cabang')->where('nama', '=', Auth::user()->cabang)->update([
+            'status_takeaway' => 'start'
+        ]);
+        
+        return redirect('/antrian-takeaway');
+    }
+
+    public function pause_panggilan(AntrianTakeAway $antrianTakeAway)
+    {
+        DB::table('cabang')->where('nama', '=', Auth::user()->cabang)->update([
+            'status_takeaway' => 'pause'
+        ]);
+     
+        return redirect('/antrian-takeaway');
+    }
+
+
+    public function stop_panggilan(AntrianTakeAway $antrianTakeAway)
+    {
+        DB::table('cabang')->where('nama', '=', Auth::user()->cabang)->update([
+            'status_takeaway' => 'stop'
+        ]);
+        // code...
+     
+        return redirect('/antrian-takeaway');
+    }
+
     public function show_antrian(AntrianTakeAway $antrianTakeAway)
     {
         //
@@ -198,32 +227,32 @@ class AntrianTakeAwayController extends Controller
         return redirect('antrian-takeaway');
     }
 
-    public function edit_pause(AntrianTakeAway $antrianTakeAway)
-    {
-        DB::table('antrian')
-            ->where('id', 1)
-            ->update(['antrian_takeaway_status' => 'pause']);
+    // public function edit_pause(AntrianTakeAway $antrianTakeAway)
+    // {
+    //     DB::table('antrian')
+    //         ->where('id', 1)
+    //         ->update(['antrian_takeaway_status' => 'pause']);
 
-        return redirect('antrian-takeaway');
-    }
+    //     return redirect('antrian-takeaway');
+    // }
 
-    public function edit_stop(AntrianTakeAway $antrianTakeAway)
-    {
-        DB::table('antrian')
-            ->where('id', 1)
-            ->update(['antrian_takeaway_status' => 'stop']);
+    // public function edit_stop(AntrianTakeAway $antrianTakeAway)
+    // {
+    //     DB::table('antrian')
+    //         ->where('id', 1)
+    //         ->update(['antrian_takeaway_status' => 'stop']);
 
-        return redirect('antrian-takeaway');
-    }
+    //     return redirect('antrian-takeaway');
+    // }
 
-    public function edit_start(AntrianTakeAway $antrianTakeAway)
-    {
-        DB::table('antrian')
-            ->where('id', 1)
-            ->update(['antrian_takeaway_status' => 'run']);
+    // public function edit_start(AntrianTakeAway $antrianTakeAway)
+    // {
+    //     DB::table('antrian')
+    //         ->where('id', 1)
+    //         ->update(['antrian_takeaway_status' => 'run']);
 
-        return redirect('antrian-takeaway');
-    }
+    //     return redirect('antrian-takeaway');
+    // }
 
     // kehadiran
 

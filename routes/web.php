@@ -7,11 +7,13 @@ use App\Http\Controllers\AntrianDineInController;
 use App\Http\Controllers\AntrianReservasiController;
 use App\Http\Controllers\AntrianTakeAwayController;
 use App\Http\Controllers\CabangController;
+use App\Http\Controllers\CabangLiburController;
 use App\Http\Controllers\ChangePasswordController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InfoUserController;
 use App\Http\Controllers\InfoWaitersController;
 use App\Http\Controllers\LoginWaitersController;
+use App\Http\Controllers\MailController;
 use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\QrCodeController;
 use App\Http\Controllers\RegisterController;
@@ -24,6 +26,7 @@ use App\Http\Controllers\ReservasiJam;
 use App\Http\Controllers\ReservasiJumlah;
 use App\Http\Controllers\ReservasiKonfirmasiPembayaran;
 use App\Http\Controllers\ReservasiPembayaran;
+use App\Http\Controllers\ReservasiTanggal;
 use App\Http\Controllers\Reservers;
 use App\Http\Controllers\ResetController;
 use App\Http\Controllers\RestoCabang;
@@ -32,6 +35,7 @@ use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\SiteController;
 use App\Http\Controllers\StatusAntrian;
 use App\Http\Controllers\Takeaway;
+use App\Http\Controllers\WaitersController;
 use App\Http\Controllers\WaitingListAntrian;
 use App\Http\Controllers\WaitingListInputEmail;
 use App\Http\Controllers\WaitingListInputNama;
@@ -113,6 +117,9 @@ Route::post('/reservasi-jumlah-session', [ReservasiJumlah::class, 'store']);
 Route::get('/reservasi-jam', [ReservasiJam::class, 'create']);
 Route::post('/reservasi-jam-session', [ReservasiJam::class, 'store']);
 
+Route::get('/reservasi-tanggal', [ReservasiTanggal::class, 'create']);
+Route::post('/reservasi-tanggal-session', [ReservasiTanggal::class, 'store']);
+
 Route::get('/reservasi-pembayaran', [ReservasiPembayaran::class, 'create']);
 Route::post('/reservasi-pembayaran-session', [ReservasiPembayaran::class, 'store']);
 
@@ -120,14 +127,21 @@ Route::post('/reservasi-pembayaran-session', [ReservasiPembayaran::class, 'store
 // Route::post('/site', [SiteController::class, 'create']);
 
 Route::get('/pelanggan-add', [PelangganController::class, 'create']);
+
+Route::get('/waiters-add', [WaitersController::class, 'create']);
+Route::get('/waiters-add-session', [WaitersController::class, 'store']);
 // Route::post('/pelanggan-add', [PelangganController::class, 'store']);
 Route::resource('customer', PelangganController::class);
+
+Route::resource('waiters', WaitersController::class);
 
 Route::resource('cabang', CabangController::class);
 Route::post('/cabang-store', [CabangController::class, 'store']);
 // Route::get('/cabang-destroy', [CabangController::class]);
 
 Route::get('/cabang-add', [CabangController::class, 'create']);
+Route::get('/cabang-waktu-libur', [CabangLiburController::class, 'index']);
+Route::post('/cabang-add-libur', [CabangLiburController::class, 'store']);
 // Route::get('cabangs', [CabangController::class]);
 
 Route::resource('pelanggan', InfoUserController::class);
@@ -146,9 +160,12 @@ Route::get('/tambah-pelanggan', function () {
 // ==============
 // reservasi user
 // ==============
-Route::get('/reservasi-cek-email', function () {
-	return view('livewire.resto.user.reservasi.reservasi-cek-email');
-})->name('cek-email');
+// Route::get('/reservasi-cek-email', function () {
+// 	return view('livewire.resto.user.reservasi.reservasi-cek-email');
+// })->name('cek-email');
+
+
+Route::get('/reservasi-cek-email', [MailController::class, 'create']);
 
 Route::get('/reservasi-tunggu-payment', function () {
 	return view('livewire.resto.user.reservasi.reservasi-tunggu-payment');
@@ -177,6 +194,8 @@ Route::post('/waiters-password-session', [InfoUserController::class, 'ganti_pass
 Route::get('/customer-data', [InfoUserController::class, 'show']);
 
 Route::get('/customer-antrian', [InfoUserController::class, 'show_antrian']);
+
+Route::get('/customer-pembayaran', [InfoUserController::class, 'show_pembayaran']);
 
 Route::get('/reservasi-hari-ini', [AntrianReservasiController::class, 'show']);
 Route::post('/waitinglist-antrian-session', [WaitingListAntrian::class, 'store']);
@@ -257,6 +276,14 @@ Route::get('/waiters-menu', function () {
 
 Route::get('/antrian-dine-in', [AntrianDineInController::class, 'show']);
 Route::get('/antrian-takeaway', [AntrianTakeAwayController::class, 'show']);
+// start / pause / stop waiters (dinein)
+Route::get('/start-antrian-dinein', [AntrianDineInController::class, 'start_panggilan']);
+Route::get('/pause-antrian-dinein', [AntrianDineInController::class, 'pause_panggilan']);
+Route::get('/stop-antrian-dinein', [AntrianDineInController::class, 'stop_panggilan']);
+
+Route::get('/start-antrian-takeaway', [AntrianTakeAwayController::class, 'start_panggilan']);
+Route::get('/pause-antrian-takeaway', [AntrianTakeAwayController::class, 'pause_panggilan']);
+Route::get('/stop-antrian-takeaway', [AntrianTakeAwayController::class, 'stop_panggilan']);
 
 Route::get('/cek-antrian-takeaway', [AntrianTakeAwayController::class, 'show_antrian']);
 Route::get('/cari-antrian-takeaway', [AntrianTakeAwayController::class, 'cari']);
@@ -266,9 +293,9 @@ Route::get('/cari-antrian-dinein', [AntrianDineInController::class, 'cari']);
 // Route::get('/add-panggilan-dinein', [AntrianDineInController::class, 'edit']);
 
 // pause or stop panggilan dinein
-Route::get('/pause-antrian-dinein', [AntrianDineInController::class, 'edit_pause']);
-Route::get('/stop-antrian-dinein', [AntrianDineInController::class, 'edit_stop']);
-Route::get('/start-antrian-dinein', [AntrianDineInController::class, 'edit_start']);
+// Route::get('/pause-antrian-dinein', [AntrianDineInController::class, 'edit_pause']);
+// Route::get('/stop-antrian-dinein', [AntrianDineInController::class, 'edit_stop']);
+// Route::get('/start-antrian-dinein', [AntrianDineInController::class, 'edit_start']);
 
 
 // update panggilan dinein
@@ -277,10 +304,10 @@ Route::get('/start-antrian-dinein', [AntrianDineInController::class, 'edit_start
 
 // Route::get('user/{name?}', 'UserController@getName');
 
-// pause or stop panggilan dinein
-Route::get('/pause-antrian-takeaway', [AntrianTakeAwayController::class, 'edit_pause']);
-Route::get('/stop-antrian-takeaway', [AntrianTakeAwayController::class, 'edit_stop']);
-Route::get('/start-antrian-takeaway', [AntrianTakeAwayController::class, 'edit_start']);
+// // pause or stop panggilan dinein
+// Route::get('/pause-antrian-takeaway', [AntrianTakeAwayController::class, 'edit_pause']);
+// Route::get('/stop-antrian-takeaway', [AntrianTakeAwayController::class, 'edit_stop']);
+// Route::get('/start-antrian-takeaway', [AntrianTakeAwayController::class, 'edit_start']);
 
 // panggilan dinein - fungsi2
 Route::get('/panggilan-antrian-dinein', [AntrianDineInController::class, 'show_panggilan']);
@@ -349,3 +376,5 @@ Route::get('testing', function () {
 
 // qr code samples
 Route::get('/home-resto', [LivewireQrcode::class, 'render']);
+
+Route::get('/send', [MailController::class, 'index']);

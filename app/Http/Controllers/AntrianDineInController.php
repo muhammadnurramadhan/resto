@@ -102,23 +102,46 @@ class AntrianDineInController extends Controller
     public function show(AntrianDineIn $antrianDineIn)
     {
         //
-        // fungsi jumlah row pada table db  
         $rowList = AntrianDineIn::where('id', '>=', 0)->get();
         $rowCount = $rowList->count();
-
         $panggilan = AntrianDineIn::where('panggilan', '>=', 0)->get();
         $total_panggilan = DB::table('antrian')->where('cabang', '=', Auth::user()->cabang)->where('tipe_antrian', '=', 'WAITING LIST')->sum('jumlah_panggilan');
-        // 
         $status_antrian_dinein =  DB::table('cabang')->where('nama', '=', Auth::user()->cabang)->first()->status_dinein;
-        // $status_antrian_takeaway =  DB::table('cabang')->where('nama', '=', Auth::user()->cabang)->first()->status_takeaway;
-
-        // echo(Auth::user()->cabang);
-        // echo($status_antrian_dinein);
-
+     
         //
         $data = AntrianDineIn::all();
         return view('livewire.resto.waiters.antrian', ['members' => $data, 'count' => $rowCount, 'panggilan' => $panggilan, 'total_panggilan' => $total_panggilan, 'status_dinein' => $status_antrian_dinein]);
     }
+
+    public function start_panggilan(AntrianDineIn $antrianDineIn)
+    {
+        DB::table('cabang')->where('nama', '=', Auth::user()->cabang)->update([
+            'status_dinein' => 'start'
+        ]);
+        
+        return redirect('/antrian-dine-in');
+    }
+
+    public function pause_panggilan(AntrianDineIn $antrianDineIn)
+    {
+        DB::table('cabang')->where('nama', '=', Auth::user()->cabang)->update([
+            'status_dinein' => 'pause'
+        ]);
+     
+        return redirect('/antrian-dine-in');
+    }
+
+
+    public function stop_panggilan(AntrianDineIn $antrianDineIn)
+    {
+        DB::table('cabang')->where('nama', '=', Auth::user()->cabang)->update([
+            'status_dinein' => 'stop'
+        ]);
+        // code...
+     
+        return redirect('/antrian-dine-in');
+    }
+
 
     public function show_panggilan(AntrianDineIn $antrianDineIn)
     {
@@ -167,9 +190,7 @@ class AntrianDineInController extends Controller
         if (empty($antrian_dinein_sekarang) == true) {
             # code...
             return view('livewire.resto.waiters.panggilan-antrian', ['members' => $data,  'panggilan' => $panggilan, 'user' => null, 'user_prev' => null, 'user_next' => null]);
-        }
-
-         else {
+        } else {
 
             return view('livewire.resto.waiters.panggilan-antrian', ['members' => $data,  'panggilan' => $panggilan, 'user' => $antrian_dinein_sekarang, 'user_prev' => $antrian_dinein_sebelumnya, 'user_next' => $antrian_dinein_next]);
         }

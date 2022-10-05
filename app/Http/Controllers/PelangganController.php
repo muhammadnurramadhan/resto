@@ -10,6 +10,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 // use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class PelangganController extends Controller
 {
@@ -60,7 +61,8 @@ class PelangganController extends Controller
         $storeData['no_va'] = 0;
         $storeData['no_antrian'] = 0; //reservasi_konfirmasi_pembayaran
         $storeData['reservasi_konfirmasi_pembayaran'] = ''; //reservasi_konfirmasi_pembayaran
-        User::create($storeData);
+        // User::create($storeData);
+        DB::table('users')->insertOrIgnore($storeData);
         return redirect('/customer-data')->with('completed', 'Pelanggan has been saved!');
     }
 
