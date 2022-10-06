@@ -17,8 +17,9 @@ class ReservasiPembayaran extends Controller
     public function create()
     {
 
+        $cabang = DB::table('cabang')->where('nama', Auth::user()->pilih_cabang)->first();
 
-        return view('livewire.resto.user.reservasi.reservasi-pembayaran');
+        return view('livewire.resto.user.reservasi.reservasi-pembayaran', ['cabang' => $cabang]);
         // $page = file_get_contents("https://wa.me/1XXXXXXXXXX?text=I'm%20interested%20in%20your%20car%20for%20sale");
 
         // echo $page;
@@ -43,6 +44,8 @@ class ReservasiPembayaran extends Controller
         // session()->flash('success', 'Your account has been created.');
         // $user = User::create($attributes);
         // Auth::login($user); 
+        
+        $cabang = DB::table('cabang')->where('nama', Auth::user()->pilih_cabang)->first();
 
         $orderid = rand(0000000000, 9999999999);
         $curl = curl_init();
@@ -60,7 +63,7 @@ class ReservasiPembayaran extends Controller
             CURLOPT_POSTFIELDS => '{
     "payment_type": "bank_transfer",
     "transaction_details": {
-        "gross_amount": 2100,
+        "gross_amount": ' . "$cabang->fee" . ',
         "order_id": "order-101q-' . "$orderid" . '"
     },
     "customer_details": {
@@ -71,8 +74,8 @@ class ReservasiPembayaran extends Controller
     },
     "item_details": [
     {
-       "id": "item01",
-       "price": 2100,
+       "id": "reservasi",
+       "price": ' . "$cabang->fee" . ',
        "quantity": 1,
        "name": "Ayam Zozozo"
     }

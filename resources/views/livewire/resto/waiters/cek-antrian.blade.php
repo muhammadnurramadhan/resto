@@ -96,11 +96,13 @@
                 <form class="form-inline" action="cari-antrian-dinein" method="GET">
                     <div class="form-group mx-sm-3 mb-2"
                         style="display:flex; justify-content:center; align-items:center; width: 25rem">
-                        <input type="text" class="form-control" id="cari" name="cari" value="{{ old('cari') }}" placeholder="Cari data">
+                        <input type="text" class="form-control" id="cari" name="cari"
+                            value="{{ old('cari') }}" placeholder="Cari data">
                     </div>
 
                     <div style="display:flex; justify-content:center; align-items:center; width: 100%; margin-top:10%;">
-                        <button type="submit" class="btn btn-outline-light mb-2" style="height: 60px">Cari data customer</button>
+                        <button type="submit" class="btn btn-outline-light mb-2" style="height: 60px">Cari data
+                            customer</button>
                     </div>
                 </form>
             </div>
@@ -115,28 +117,46 @@
 
             {{-- <hr width="30%" style="background-color:black; color: black; height: 3px"> --}}
 
-            <div class="container"
+            {{-- <div class="container"
                 style="display: flex; justify-content:center; align-items:center; flex-direction:column; margin-bottom:2%; margin-top: 5%;">
                 <h1
                     style="font-weight:300;color: #3C3C3C;font-size:1.6rem; padding-left: 10%; padding-right:10%; text-align:center; align-items:center; justify-content:center; font-weight:bolder">
                     Hasil Pencarian</h1>
+
                 <h1
-                    style="color: #0FA6A2;font-size:2.2rem; padding-left: 10%; padding-right:10%; text-align:center; align-items:center; justify-content:center; font-weight:bolder">
-                    {{ $data_cari != null ? $data_cari[0]->nama : 'Nama' }}</h1>
+                    style="color: #0FA6A2;font-size:1.4rem; padding-left: 10%; padding-right:10%; text-align:center; align-items:center; justify-content:center; font-weight:bolder">
+                    {{ $data_cari[0]->nama ?? 'Nama : -' }}</h1>
 
                 <h1
                     style="font-weight:300;color: #3C3C3C;font-size:1.6rem; padding-left: 10%; padding-right:10%; text-align:center; align-items:center; justify-content:center; margin-top: 3%; font-weight:bolder">
-                    Jumlah Orang</h1>
+                    Jumlah Panggilan</h1>
                 <h1
-                    style="color: #0FA6A2;font-size:2.2rem; padding-left: 10%; padding-right:10%; text-align:center; align-items:center; justify-content:center; font-weight:bolder">
-                    {{ $data_cari != null ? $data_cari[0]->jumlah_orang : 'Jumlah orang' }}</h1>
+                    style="color: #0FA6A2;font-size:1.4rem; padding-left: 10%; padding-right:10%; text-align:center; align-items:center; justify-content:center; font-weight:bolder">
+                    {{ $data_cari[0]->jumlah_panggilan ?? 'Jumlah panggilan : -' }}</h1>
 
                 <h1
                     style="font-weight:300;color: #3C3C3C;font-size:1.6rem; padding-left: 10%; padding-right:10%; text-align:center; align-items:center; justify-content:center; margin-top: 3%; font-weight:bolder">
                     No antrian</h1>
                 <h1
-                    style="color:#3C3C3C;font-size:4.2rem; padding-left: 10%; padding-right:10%; text-align:center; align-items:center; justify-content:center; font-weight:bolder">
-                    {{ $data_cari != null ? $data_cari[0]->antrian_sekarang : 'No antrian' }}</h1>
+                    style="color:#3C3C3C;font-size:1.4rem; padding-left: 10%; padding-right:10%; text-align:center; align-items:center; justify-content:center; font-weight:bolder">
+                    {{ $data_cari[0]->no_antrian ?? 'No antrian : -' }}</h1>
+            </div> --}}
+
+            <div class="card text-white bg-dark mb-3" style="width: 25rem; margin:5%">
+                <div class="card-header"><h5 style="font-style: italic">Hasil pencarian</h5></div>
+                <div class="card-body">
+                    <h5 style="font-style: italic" class="card-title">Nama</h5>
+                    <p style="font-style: italic; margin:5%" class="card-text">{{ $data_cari[0]->nama ?? 'Nama : -' }}</p>
+                </div>
+                <div class="card-body">
+                    <h5 style="font-style: italic" class="card-title">Jumlah panggilan</h5>
+                    <p style="font-style: italic; margin:5%" class="card-text">{{ $data_cari[0]->jumlah_panggilan ?? 'Jumlah panggilan : -' }}</p>
+                </div>
+                
+                <div class="card-body">
+                    <h5 style="font-style: italic" class="card-title">No antrian</h5>
+                    <p style="font-style: italic; margin:5%" class="card-text">{{ $data_cari[0]->no_antrian ?? 'No antrian : -' }}</p>
+                </div>
             </div>
 
             <div style="display: flex; flex-direction:row; margin-top: 1%; width: 100%">

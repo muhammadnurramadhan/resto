@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CabangLibur;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,7 +14,11 @@ class ReservasiJam extends Controller
 {
     public function create()
     {
-        return view('livewire.resto.user.reservasi.reservasi-jam-kedatangan');
+        $libur = DB::table('cabang_liburs')->get();
+        
+        $cabang = CabangLibur::where('cabang', '=', Auth::user()->pilih_cabang)->get();
+
+        return view('livewire.resto.user.reservasi.reservasi-jam-kedatangan', ['libur' => $libur, 'cabang' => $cabang]);
     }
 
     public function store()

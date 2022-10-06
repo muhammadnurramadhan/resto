@@ -289,6 +289,11 @@ Route::get('/cek-antrian-takeaway', [AntrianTakeAwayController::class, 'show_ant
 Route::get('/cari-antrian-takeaway', [AntrianTakeAwayController::class, 'cari']);
 Route::get('/cari-antrian-dinein', [AntrianDineInController::class, 'cari']);
 
+// Route::get ('/cari-antrian-dinein', function () {
+// 	$dummyDetails = User::paginate(25);
+// 	return view ( ‘welcome’ )->withUsers($dummyDetails);
+//    } );
+
 // update panggilan dinein
 // Route::get('/add-panggilan-dinein', [AntrianDineInController::class, 'edit']);
 

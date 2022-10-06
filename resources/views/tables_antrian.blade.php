@@ -24,6 +24,10 @@
                                             <th
                                                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                 Jumlah meja</th>
+                                                
+                                            <th
+                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Jumlah fee</th>
                                             {{-- <th
                                                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                 Tanggal tutup</th>
@@ -76,6 +80,12 @@
                                                     <a href="javascript:;" class="text-secondary font-weight-bold text-xs"
                                                         data-toggle="tooltip" data-original-title="Edit user">
                                                         {{ $item->jumlah_meja }}
+                                                    </a>
+                                                </td>
+                                                <td class="align-middle" style="text-align: center">
+                                                    <a href="javascript:;" class="text-secondary font-weight-bold text-xs"
+                                                        data-toggle="tooltip" data-original-title="Edit user">
+                                                        Rp.{{ $item->fee }}
                                                     </a>
                                                 </td>
 

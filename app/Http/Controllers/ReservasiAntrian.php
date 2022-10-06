@@ -17,9 +17,9 @@ class ReservasiAntrian extends Controller
     public function create()
     {
         // ->where('id', '=', 6)->first()
-        $status_reservasi = DB::table('cabang')->where('nama', '=', Auth::user()->pilih_cabang)->first()->status_reservasi;
-        $status_dinein = DB::table('cabang')->where('nama', '=', Auth::user()->pilih_cabang)->first()->status_dinein;
-        $status_takeaway = DB::table('cabang')->where('nama', '=', Auth::user()->pilih_cabang)->first()->status_takeaway;
+        $status_reservasi = DB::table('cabang')->where('nama', '=', Auth::user()->pilih_cabang)->get();
+        $status_dinein = DB::table('cabang')->where('nama', '=', Auth::user()->pilih_cabang)->get();
+        $status_takeaway = DB::table('cabang')->where('nama', '=', Auth::user()->pilih_cabang)->get();
 
         // echo ($status_reservasi);
         // echo($status_dinein);

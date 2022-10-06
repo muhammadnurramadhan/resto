@@ -17,7 +17,10 @@
                                         <tr>
                                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                 Nama</th>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
+                                                <th
+                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                Transaksi status</th>
+                                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
                                                 style="text-align: center">Jumlah Pembayaran</th>
                                             <th
                                                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
@@ -25,9 +28,7 @@
                                             <th
                                                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                 Transaksi id</th>
-                                            <th
-                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Transaksi status</th>
+                                            
                                             <th
                                                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                 Status Messages</th>
@@ -40,7 +41,7 @@
                                     <tbody>
 
                                         @foreach ($members as $item)
-                                        @if ($item->role == '3')
+                                        @if ($item->role == '3' && $item->order_id != null)
                                             <tr>
                                                 <td>
                                                     <div class="d-flex px-2 py-1">
@@ -54,10 +55,15 @@
                                                         </div>
                                                     </div>
                                                 </td>
+                                                
+                                                <td class="align-middle text-center text-sm" style="text-align: center">
+                                                    <span
+                                                        class="badge badge-sm bg-gradient-info">{{ $item->transaction_status == null ? 'Pending' : $item->transaction_status }}</span>
+                                                </td>
 
                                                 <td style="text-align: center">
                                                     <p class="text-xs font-weight-bold mb-0" style="text-align: center">
-                                                        {{ $item->order_id }}</p>
+                                                        Rp. {{ $item->gross_amount }}</p>
                                                 </td>
 
                                                 <td style="text-align: center">
@@ -68,11 +74,6 @@
                                                 <td style="text-align: center">
                                                     <p class="text-xs font-weight-bold mb-0" style="text-align: center">
                                                         {{ $item->order_id }}</p>
-                                                </td>
-
-                                                <td class="align-middle text-center text-sm" style="text-align: center">
-                                                    <span
-                                                        class="badge badge-sm bg-gradient-success">{{ $item->transaction_status == null ? 'Pending' : $item->transaction_status }}</span>
                                                 </td>
 
                                                 {{-- <td class="align-middle text-center" style="text-align: center">

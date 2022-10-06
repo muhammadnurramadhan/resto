@@ -80,6 +80,10 @@
                         <h5 class="card-title">Meja | id</h5>
                         <p class="card-text" style="font-style: italic">&nbsp;{{ Auth::user()->id }}</p>
                     </div>
+                    <div style="margin: 5%; margin-bottom: 10%">
+                        <h5 class="card-title">Fee yang akan dibayar</h5>
+                        <p class="card-text" style="font-style: italic">&nbsp;Rp.{{ $cabang->fee }}</p>
+                    </div>
                 </div>
             </div>
         </div>

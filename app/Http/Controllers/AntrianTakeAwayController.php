@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\AntrianTakeAway;
 use App\Http\Requests\StoreAntrianTakeAwayRequest;
 use App\Http\Requests\UpdateAntrianTakeAwayRequest;
+use App\Models\AntrianUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -201,20 +202,24 @@ class AntrianTakeAwayController extends Controller
         //     ->where('nama', 'like', "%" . . "%")
         //     ->get();
 
-        $data_cari = AntrianTakeAway::where('nama', 'LIKE', '%' . $cari == null ? 'take' : $cari . '%')->get();
+        // mengambil data dari table pegawai sesuai pencarian data
+        // $data_cari = DB::table('antrian_take_aways')
+        //     ->where('nama', 'like', "%" . . "%")
+        //     ->get();
+
+        $data_cari = AntrianUser::where('nama', 'LIKE', '%' . $cari == null ? 'ra' : $cari . '%')->get();
 
         // echo($data_cari[0]->nama);
         //  ================================================
         //  ================================================
         //  ================================================
         // mengirim data pegawai ke view index
-        $rowList = AntrianTakeAway::where('id', '>=', 0)->get();
+        $rowList = AntrianUser::where('id', '>=', 0)->get();
         $rowCount = $rowList->count();
 
-        $panggilan = AntrianTakeAway::where('panggilan', '>=', 0)->get();
+        $panggilan = AntrianUser::where('jumlah_panggilan', '>=', 0)->get();
         //
-        $data = AntrianTakeAway::all();
-
+        $data = AntrianUser::all();
         return view('livewire.resto.waiters.cek-antrian-takeaway', ['members' => $data, 'count' => $rowCount, 'panggilan' => $panggilan, 'data_cari' => $data_cari]);
     }
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\AntrianDineIn;
 use App\Http\Requests\StoreAntrianDineInRequest;
 use App\Http\Requests\UpdateAntrianDineInRequest;
+use App\Models\AntrianUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -63,20 +64,24 @@ class AntrianDineInController extends Controller
         //     ->where('nama', 'like', "%" . . "%")
         //     ->get();
 
-        $data_cari = AntrianDineIn::where('nama', 'LIKE', '%' . $cari == null ? 'take' : $cari . '%')->get();
+        // mengambil data dari table pegawai sesuai pencarian data
+        // $data_cari = DB::table('antrian_take_aways')
+        //     ->where('nama', 'like', "%" . . "%")
+        //     ->get();
+
+        $data_cari = AntrianUser::where('nama', 'LIKE', '%' . $cari == null ? 'ra' : $cari . '%')->get();
 
         // echo($data_cari[0]->nama);
         //  ================================================
         //  ================================================
         //  ================================================
         // mengirim data pegawai ke view index
-        $rowList = AntrianDineIn::where('id', '>=', 0)->get();
+        $rowList = AntrianUser::where('id', '>=', 0)->get();
         $rowCount = $rowList->count();
 
-        $panggilan = AntrianDineIn::where('panggilan', '>=', 0)->get();
+        $panggilan = AntrianUser::where('jumlah_panggilan', '>=', 0)->get();
         //
-        $data = AntrianDineIn::all();
-
+        $data = AntrianUser::all();
         return view('livewire.resto.waiters.cek-antrian', ['members' => $data, 'count' => $rowCount, 'panggilan' => $panggilan, 'data_cari' => $data_cari]);
     }
 

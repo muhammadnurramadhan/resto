@@ -17,6 +17,7 @@ class RestoCabang extends Controller
     public function create()
     {
         $cabang = DB::table('cabang')->get();
+        
         // return view('livewire.resto.user.reservasi.reservasi-cabang');
         return view('livewire.resto.user.reservasi.reservasi-cabang', ['cabang' => $cabang]);
     }

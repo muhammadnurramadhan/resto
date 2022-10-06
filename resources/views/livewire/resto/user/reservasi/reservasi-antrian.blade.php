@@ -58,42 +58,43 @@ datang langsung dengan antrian disini ya -->
         <form role="form text-left" method="POST" action="/reservasi-antrian-session">
             @csrf
             <div class="card text-bg-success mb-3" style="max-width: 18rem; margin-top:1%">
-                
-                @if ($status_reservasi == 'aktif')
-                <button class="btn btn-light" type="submit" name="pilih_jenis_reservasi" value='RESERVASI'
-                    class="btn btn-dark">
-                    <div class="card-body" style="background-color: #63b8a7;">
-                        <h5 class="card-title"
-                            style="display: flex; align-items:center; text-align:center; justify-content:center; color:#264c3d">
-                            RESERVASI</h5>
-                        <p class="card-text"
-                            style="display: flex; align-items:center; text-align:center; justify-content:center; color: #264c3d;margin-top:10%">
-                            Reservasi hanya bisa dilakukan H-1
-                            sebelum kedatangan dengan melakukan
-                            pembayaran reservasi dimuka Rp.
-                            minimal DP,- yang akan dipotong
-                            dari transaksi saat dine in
-                        </p>
-                    </div>
-                </button>
-                @else
-                <button disabled class="btn btn-light" type="submit" name="pilih_jenis_reservasi" value='RESERVASI'
-                    class="btn btn-dark">
-                    <div class="card-body" style="background-color: #63b8a7;">
-                        <h5 class="card-title"
-                            style="display: flex; align-items:center; text-align:center; justify-content:center; color:#264c3d">
-                            RESERVASI</h5>
-                        <p class="card-text"
-                            style="display: flex; align-items:center; text-align:center; justify-content:center; color: #264c3d;margin-top:10%">
-                            Reservasi hanya bisa dilakukan H-1
-                            sebelum kedatangan dengan melakukan
-                            pembayaran reservasi dimuka Rp.
-                            minimal DP,- yang akan dipotong
-                            dari transaksi saat dine in
-                        </p>
-                    </div>
-                </button>
-                @endif
+                @foreach ($status_reservasi as $item)
+                    @if ($item->status_reservasi == 'aktif')
+                        <button class="btn btn-light" type="submit" name="pilih_jenis_reservasi" value='RESERVASI'
+                            class="btn btn-dark">
+                            <div class="card-body" style="background-color: #63b8a7;">
+                                <h5 class="card-title"
+                                    style="display: flex; align-items:center; text-align:center; justify-content:center; color:#264c3d">
+                                    RESERVASI</h5>
+                                <p class="card-text"
+                                    style="display: flex; align-items:center; text-align:center; justify-content:center; color: #264c3d;margin-top:10%">
+                                    Reservasi hanya bisa dilakukan H-1
+                                    sebelum kedatangan dengan melakukan
+                                    pembayaran reservasi dimuka Rp.
+                                    minimal DP,- yang akan dipotong
+                                    dari transaksi saat dine in
+                                </p>
+                            </div>
+                        </button>
+                    @else
+                        <button disabled class="btn btn-light" type="submit" name="pilih_jenis_reservasi"
+                            value='RESERVASI' class="btn btn-dark">
+                            <div class="card-body" style="background-color: #63b8a7;">
+                                <h5 class="card-title"
+                                    style="display: flex; align-items:center; text-align:center; justify-content:center; color:#264c3d">
+                                    RESERVASI</h5>
+                                <p class="card-text"
+                                    style="display: flex; align-items:center; text-align:center; justify-content:center; color: #264c3d;margin-top:10%">
+                                    Reservasi hanya bisa dilakukan H-1
+                                    sebelum kedatangan dengan melakukan
+                                    pembayaran reservasi dimuka Rp.
+                                    minimal DP,- yang akan dipotong
+                                    dari transaksi saat dine in
+                                </p>
+                            </div>
+                        </button>
+                    @endif
+                @endforeach
 
             </div>
         </form>
@@ -103,33 +104,37 @@ datang langsung dengan antrian disini ya -->
         <form role="form text-left" method="POST" action="/waitinglist-antrian-session">
             @csrf
             <div class="card text-bg-success mb-3" style="max-width: 18rem; margin-top:1%">
-                @if ($status_dinein == 'aktif')
-                <button class="btn btn-light" type="submit" name="pilih_jenis_reservasi" value='WAITING LIST'
-                    class="btn btn-dark">
-                    <div class="card-body" style="background-color: #264c3d;">
-                        <h5 class="card-title"
-                            style="display: flex; align-items:center; text-align:center; justify-content:center">WAITING
-                            LIST</h5>
-                        <p class="card-text"
-                            style="display: flex; align-items:center; text-align:center; justify-content:center;margin-top:10%">
-                            Walkin dapat dilakukan dihari yang sama,
-                            tanpa diminta pembayaran dimuka!</p>
-                    </div>
-                </button>
-                @else
-                <button disabled class="btn btn-light" type="submit" name="pilih_jenis_reservasi" value='WAITING LIST'
-                    class="btn btn-dark">
-                    <div class="card-body" style="background-color: #264c3d;">
-                        <h5 class="card-title"
-                            style="display: flex; align-items:center; text-align:center; justify-content:center">WAITING
-                            LIST</h5>
-                        <p class="card-text"
-                            style="display: flex; align-items:center; text-align:center; justify-content:center;margin-top:10%">
-                            Walkin dapat dilakukan dihari yang sama,
-                            tanpa diminta pembayaran dimuka!</p>
-                    </div>
-                </button>
-                @endif
+                @foreach ($status_dinein as $item)
+                    @if ($item->status_dinein == 'aktif')
+                        <button class="btn btn-light" type="submit" name="pilih_jenis_reservasi" value='WAITING LIST'
+                            class="btn btn-dark">
+                            <div class="card-body" style="background-color: #264c3d;">
+                                <h5 class="card-title"
+                                    style="display: flex; align-items:center; text-align:center; justify-content:center">
+                                    WAITING
+                                    LIST</h5>
+                                <p class="card-text"
+                                    style="display: flex; align-items:center; text-align:center; justify-content:center;margin-top:10%">
+                                    Walkin dapat dilakukan dihari yang sama,
+                                    tanpa diminta pembayaran dimuka!</p>
+                            </div>
+                        </button>
+                    @else
+                        <button disabled class="btn btn-light" type="submit" name="pilih_jenis_reservasi"
+                            value='WAITING LIST' class="btn btn-dark">
+                            <div class="card-body" style="background-color: #264c3d;">
+                                <h5 class="card-title"
+                                    style="display: flex; align-items:center; text-align:center; justify-content:center">
+                                    WAITING
+                                    LIST</h5>
+                                <p class="card-text"
+                                    style="display: flex; align-items:center; text-align:center; justify-content:center;margin-top:10%">
+                                    Walkin dapat dilakukan dihari yang sama,
+                                    tanpa diminta pembayaran dimuka!</p>
+                            </div>
+                        </button>
+                    @endif
+                @endforeach
 
             </div>
         </form>
@@ -137,35 +142,37 @@ datang langsung dengan antrian disini ya -->
         <form role="form text-left" method="POST" action="/reservasi-antrian-session">
             @csrf
             <div class="card text-bg-success mb-3" style="max-width: 18rem; margin-top:1%">
-                
-                @if ($status_takeaway == 'aktif')
-                <button class="btn btn-light" type="submit" name="pilih_jenis_reservasi" value='TAKE AWAY'
-                    class="btn btn-dark">
-                    <div class="card-body" style="background-color: #63b8a7;">
-                        <h5 class="card-title"
-                            style="display: flex; align-items:center; text-align:center; justify-content:center; color:#264c3d">
-                            TAKE AWAY</h5>
-                        <p class="card-text"
-                            style="display: flex; align-items:center; text-align:center; justify-content:center; color: #264c3d;margin-top:10%">
-                            Take Away dapat dilakukan dihari yang
-                            sama, dengan anttrian terpisah</p>
-                    </div>
-                </button>
-                @else
-                <button disabled class="btn btn-light" type="submit" name="pilih_jenis_reservasi" value='TAKE AWAY'
-                    class="btn btn-dark">
-                    <div class="card-body" style="background-color: #63b8a7;">
-                        <h5 class="card-title"
-                            style="display: flex; align-items:center; text-align:center; justify-content:center; color:#264c3d">
-                            TAKE AWAY</h5>
-                        <p class="card-text"
-                            style="display: flex; align-items:center; text-align:center; justify-content:center; color: #264c3d;margin-top:10%">
-                            Take Away dapat dilakukan dihari yang
-                            sama, dengan anttrian terpisah</p>
-                    </div>
-                </button>
-                @endif
-                        
+
+                @foreach ($status_takeaway as $item)
+                    @if ($item->status_takeaway == 'aktif')
+                        <button class="btn btn-light" type="submit" name="pilih_jenis_reservasi" value='TAKE AWAY'
+                            class="btn btn-dark">
+                            <div class="card-body" style="background-color: #63b8a7;">
+                                <h5 class="card-title"
+                                    style="display: flex; align-items:center; text-align:center; justify-content:center; color:#264c3d">
+                                    TAKE AWAY</h5>
+                                <p class="card-text"
+                                    style="display: flex; align-items:center; text-align:center; justify-content:center; color: #264c3d;margin-top:10%">
+                                    Take Away dapat dilakukan dihari yang
+                                    sama, dengan anttrian terpisah</p>
+                            </div>
+                        </button>
+                    @else
+                        <button disabled class="btn btn-light" type="submit" name="pilih_jenis_reservasi"
+                            value='TAKE AWAY' class="btn btn-dark">
+                            <div class="card-body" style="background-color: #63b8a7;">
+                                <h5 class="card-title"
+                                    style="display: flex; align-items:center; text-align:center; justify-content:center; color:#264c3d">
+                                    TAKE AWAY</h5>
+                                <p class="card-text"
+                                    style="display: flex; align-items:center; text-align:center; justify-content:center; color: #264c3d;margin-top:10%">
+                                    Take Away dapat dilakukan dihari yang
+                                    sama, dengan anttrian terpisah</p>
+                            </div>
+                        </button>
+                    @endif
+                @endforeach
+
             </div>
         </form>
 
